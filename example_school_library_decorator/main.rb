@@ -29,7 +29,6 @@ class Library
     return unless [1, 2].include?(input)
 
     puts 'Enter your name'
-
     name = gets.chomp.match('[a-zA-Z]+.*').string
 
     puts 'Enter age'
@@ -39,16 +38,17 @@ class Library
       if input == 1
         puts 'Specialization'
         spec = gets.chomp
-        Teacher.new(age, spec, name)
-      else
+        permission = true
+        Teacher.new(age, spec, name, permission)
+      elsif input == 2
         puts 'Does parent have permission (Y/N)'
-        parent = gets.chomp
+        parent = gets.chomp.downcase
+        parent_permission = parent == 'Y'
         Student.new(age, name, parent)
       end
 
-    @people = person
-
     puts 'Added successfully'
+    @people.push(person)
   end
 
   def create_rental
