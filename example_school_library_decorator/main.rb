@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/CyclomaticComplexity, Lint/UselessAssignment
 
 require_relative './book'
 require_relative './rental'
@@ -134,7 +134,7 @@ def option(library)
     puts 'Invalid entry'
   end
 end
-# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/CyclomaticComplexity, Lint/UselessAssignment
 
 def main
   library = Library.new
