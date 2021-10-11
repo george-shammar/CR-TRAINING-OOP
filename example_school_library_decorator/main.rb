@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/CyclomaticComplexity
+
 require_relative './book'
 require_relative './rental'
 require_relative './student'
@@ -28,9 +30,6 @@ class Library
 
     puts 'age: '
     age = gets.chomp
-
-    name
-    age
   end
 
   def create_person
@@ -135,6 +134,7 @@ def option(library)
     puts 'Invalid entry'
   end
 end
+# rubocop:enable Metrics/CyclomaticComplexity
 
 def main
   library = Library.new
