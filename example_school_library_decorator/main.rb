@@ -1,7 +1,7 @@
-require './book'
-require './rental'
-require './student'
-require './teacher'
+require_relative './book'
+require_relative './rental'
+require_relative './student'
+require_relative './teacher'
 
 class Library
   def initialize
@@ -12,13 +12,14 @@ class Library
 
   def create_book
     puts 'Book Name'
-    name = get.chomp.match('[a-zA-Z]+.*').string
+    title = gets.chomp.match('[a-zA-Z]+.*').string
 
     puts 'Book Author'
-    author = get.chomp.match('[a-zA-Z]+.*').string
+    author = gets.chomp.match('[a-zA-Z]+.*').string
 
-    new_book = Book.new(name, author)
+    new_book = Book.new(title, author)
     @books.push(new_book)
+    puts 'Added successfully'
   end
 
   def create_person
@@ -26,29 +27,36 @@ class Library
     puts 'Enter number one (1) for Teacher or number two (2) for Student'
 
     input = gets.chomp.to_i
-    return unless [1, 2].include?(input)
+    return puts 'Invalid Enrty.' unless [1, 2].include?(input)
 
-    puts 'Enter your name'
-    name = gets.chomp.match('[a-zA-Z]+.*').string
+    case input
+    when 2
+      puts 'name: '
+      name = gets.chomp
 
-    puts 'Enter age'
-    age = gets.chomp.match('1-9')
+      puts 'age: '
+      age = gets.chomp
 
-    person =
-      if input == 1
-        puts 'Specialization'
-        spec = gets.chomp
-        permission = true
-        Teacher.new(age, spec, name, permission)
-      elsif input == 2
-        puts 'Does parent have permission (Y/N)'
-        parent = gets.chomp.downcase
-        parent_permission = parent == 'Y'
-        Student.new(age, name, parent)
-      end
+      print 'Do you have parent permission?'
+      permission = gets.chomp
+      permission = permission.downcase == 'Y'
 
-    puts 'Added successfully'
-    @people.push(person)
+      @people << Student.new(name, age, permission)
+
+      puts 'Student has been created successfully'
+    when 1
+      print 'name: '
+      name = gets.chomp
+
+      print 'age: '
+      age = gets.chomp
+
+      print 'specialization: '
+      specialization = gets.chomp
+      @people << Teacher.new(age, name, specialization, parent_permission: true)
+
+      puts 'Teacher has been created successfully'
+    end
   end
 
   def create_rental
@@ -75,14 +83,18 @@ class Library
   end
 
   def list_books
-    @books.each do |book|
-      puts "Title: \"#{book.title}\", Author: #{book.author}"
+    if @books.length.positive?
+      @books.each { |book| puts "title: #{book.title}, Author: #{book.author}" }
+    else
+      puts 'No book found.'
     end
   end
 
   def list_people
     @people.each do |person|
+      puts ' '
       puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
+      puts ' '
     end
   end
 end
@@ -90,10 +102,10 @@ end
 def main
   puts 'Welcome to OOP Library'
 
-  processing = true
   library = Library.new
+  user_entry = nil
 
-  while processing
+  while user_entry != '7'
     puts 'Please choose a number'
     puts '1 - list all books'
     puts '2 - list all people'
@@ -105,32 +117,23 @@ def main
 
     user_entry = gets.chomp
 
-    if user_entry == '7'
-      puts ' '
-      puts 'Are you sure you want Exit? Enter (Y) to exit'
-      exit = gets.chomp
-
-      if exit == 'Y'
-        puts 'Goodbye'
-        processing = false
-      else
-        puts ' '
-        puts 'Continue with App'
-        puts ' '
-        processing = true
-      end
-    elsif user_entry == '1'
+    case user_entry
+    when '1'
       library.list_books
-    elsif user_entry == '2'
+    when '2'
       library.list_people
-    elsif user_entry == '3'
+    when '3'
       library.create_person
-    elsif user_entry == '4'
+    when '4'
       library.create_book
-    elsif user_entry == '5'
-      library.list_books
-    elsif user_entry == '6'
-      library.list_all_rentals
+    when '5'
+      library.create_rental
+    when '6'
+      library.all_rentals
+    when '7'
+      puts 'Bye'
+    else
+      puts 'Invalid entry'
     end
   end
 end
