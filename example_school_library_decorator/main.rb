@@ -22,6 +22,17 @@ class Library
     puts 'Added successfully'
   end
 
+  def details
+    puts 'name: '
+    name = gets.chomp
+
+    puts 'age: '
+    age = gets.chomp
+
+    name
+    age
+  end
+
   def create_person
     puts 'Are you a teacher or a student'
     puts 'Enter number one (1) for Teacher or number two (2) for Student'
@@ -31,11 +42,7 @@ class Library
 
     case input
     when 2
-      puts 'name: '
-      name = gets.chomp
-
-      puts 'age: '
-      age = gets.chomp
+      details
 
       print 'Do you have parent permission?'
       permission = gets.chomp
@@ -45,11 +52,7 @@ class Library
 
       puts 'Student has been created successfully'
     when 1
-      print 'name: '
-      name = gets.chomp
-
-      print 'age: '
-      age = gets.chomp
+      details
 
       print 'specialization: '
       specialization = gets.chomp
@@ -99,42 +102,51 @@ class Library
   end
 end
 
-def main
+def display
   puts 'Welcome to OOP Library'
+  puts ' '
+  puts 'Please choose a number'
+  puts '1 - list all books'
+  puts '2 - list all people'
+  puts '3 - create a person'
+  puts '4 - create a book'
+  puts '5 - create a rental'
+  puts '6 - list all rentals'
+  puts '7 - exit'
+end
 
+def option(library)
+  case user_entry
+  when '1'
+    library.list_books
+  when '2'
+    library.list_people
+  when '3'
+    library.create_person
+  when '4'
+    library.create_book
+  when '5'
+    library.create_rental
+  when '6'
+    library.all_rentals
+  when '7'
+    puts 'Bye'
+  else
+    puts 'Invalid entry'
+  end
+end
+
+def main
   library = Library.new
   user_entry = nil
 
   while user_entry != '7'
-    puts 'Please choose a number'
-    puts '1 - list all books'
-    puts '2 - list all people'
-    puts '3 - create a person'
-    puts '4 - create a book'
-    puts '5 - create a rental'
-    puts '6 - list all rentals'
-    puts '7 - exit'
+    display
 
     user_entry = gets.chomp
 
-    case user_entry
-    when '1'
-      library.list_books
-    when '2'
-      library.list_people
-    when '3'
-      library.create_person
-    when '4'
-      library.create_book
-    when '5'
-      library.create_rental
-    when '6'
-      library.all_rentals
-    when '7'
-      puts 'Bye'
-    else
-      puts 'Invalid entry'
-    end
+    option(library)
+
   end
 end
 
