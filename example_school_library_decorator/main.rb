@@ -1,9 +1,9 @@
-# rubocop:disable Metrics/CyclomaticComplexity, Lint/UselessAssignment
-
 require_relative './book'
 require_relative './rental'
 require_relative './student'
 require_relative './teacher'
+
+# rubocop:disable Metrics/CyclomaticComplexity, Metrics/MethodLength
 
 class Library
   def initialize
@@ -24,14 +24,6 @@ class Library
     puts 'Added successfully'
   end
 
-  def details
-    puts 'name: '
-    name = gets.chomp
-
-    puts 'age: '
-    age = gets.chomp
-  end
-
   def create_person
     puts 'Are you a teacher or a student'
     puts 'Enter number one (1) for Teacher or number two (2) for Student'
@@ -41,7 +33,11 @@ class Library
 
     case input
     when 2
-      details
+      puts 'name: '
+      name = gets.chomp
+
+      puts 'age: '
+      age = gets.chomp
 
       print 'Do you have parent permission?'
       permission = gets.chomp
@@ -51,7 +47,11 @@ class Library
 
       puts 'Student has been created successfully'
     when 1
-      details
+      puts 'name: '
+      name = gets.chomp
+
+      puts 'age: '
+      age = gets.chomp
 
       print 'specialization: '
       specialization = gets.chomp
@@ -114,28 +114,6 @@ def display
   puts '7 - exit'
 end
 
-def option(library)
-  case user_entry
-  when '1'
-    library.list_books
-  when '2'
-    library.list_people
-  when '3'
-    library.create_person
-  when '4'
-    library.create_book
-  when '5'
-    library.create_rental
-  when '6'
-    library.all_rentals
-  when '7'
-    puts 'Bye'
-  else
-    puts 'Invalid entry'
-  end
-end
-# rubocop:enable Metrics/CyclomaticComplexity, Lint/UselessAssignment
-
 def main
   library = Library.new
   user_entry = nil
@@ -145,9 +123,28 @@ def main
 
     user_entry = gets.chomp
 
-    option(library)
+    case user_entry
+    when '1'
+      library.list_books
+    when '2'
+      library.list_people
+    when '3'
+      library.create_person
+    when '4'
+      library.create_book
+    when '5'
+      library.create_rental
+    when '6'
+      library.all_rentals
+    when '7'
+      puts 'Bye'
+    else
+      puts 'Invalid entry'
+    end
 
   end
 end
+
+# rubocop:enable Metrics/CyclomaticComplexity, Metrics/MethodLength
 
 main
