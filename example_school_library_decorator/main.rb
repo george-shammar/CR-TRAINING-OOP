@@ -53,7 +53,7 @@ class Library
 
       print 'specialization: '
       specialization = gets.chomp
-      @people << Teacher.new(age, name, specialization, parent_permission: true)
+      @people << Teacher.new(age, name, specialization)
 
       puts 'Teacher has been created successfully'
     end
