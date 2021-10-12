@@ -62,7 +62,7 @@ class Library
   end
 
   def create_rental
-    puts 'Choose book'
+    puts 'Choose book using the book index'
     @books.each_with_index do |book, index|
       puts "#{index}) Title: \"#{book.title}\", Author: #{book.author}"
     end
@@ -70,7 +70,7 @@ class Library
     puts 'Date'
     date = gets.chomp
 
-    puts 'Enter book index'
+    puts 'Enter book index from the list above'
     book_index = gets.chomp.to_i
 
     puts "Enter a person's index"
@@ -97,6 +97,17 @@ class Library
       puts ' '
       puts "[#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age}"
       puts ' '
+    end
+  end
+
+  def all_rentals
+    print 'ID of person: '
+    id = gets.chomp.to_i
+
+    rentals = @rentals.filter { |rental| rental.person.id == id }
+    puts 'Rentals:'
+    rentals.each do |rental|
+      puts "Date: #{rental.date}, Book \"#{rental.book.title}\" by #{rental.book.author}"
     end
   end
 end
