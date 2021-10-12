@@ -27,3 +27,7 @@ git clone URL/SSH key
 ```
 bundle install
 ```
+
+To run the app in the terminal,
+
+- Open your terminal inside the `example_school_library_decorator` directory and then run `ruby main.rb`
